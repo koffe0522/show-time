@@ -3,6 +3,7 @@ const nodeExternals = require('webpack-node-externals');
 const webpack = require('webpack');
 
 module.exports = {
+  target: 'node',
   mode: 'production',
   entry: './functions/src/index.ts',
   output: {
@@ -11,12 +12,11 @@ module.exports = {
     libraryTarget: 'this',
   },
   resolve: {
-    extensions: ['.ts', '.tsx', '.js', '.json', '.test.ts'],
+    extensions: ['.ts', '.js', '.json', '.test.ts'],
     alias: {
       '@': path.resolve(__dirname, './'),
     },
   },
-  target: 'node',
   module: {
     rules: [
       {
