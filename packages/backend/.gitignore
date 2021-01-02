@@ -65,6 +65,7 @@ node_modules/
 .env
 
 ## Compiled JavaScript files
+index.js
 **/*.js.map
 
 # Typescript v1 declaration files
