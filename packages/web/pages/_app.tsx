@@ -3,7 +3,6 @@ import Head from 'next/head';
 import React, { Fragment, useEffect } from 'react';
 import { ThemeProvider } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import '../styles/globals.scss';
 import theme from '@/src/theme.ts';
 
 function MyApp({ Component, pageProps }: AppProps) {
@@ -13,7 +12,7 @@ function MyApp({ Component, pageProps }: AppProps) {
     if (jssStyles) {
       jssStyles.parentElement.removeChild(jssStyles);
     }
-  })
+  });
 
   return (
     <Fragment>
