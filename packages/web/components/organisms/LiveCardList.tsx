@@ -51,17 +51,20 @@ export default function LiveCardList(): JSX.Element {
         <Grid container spacing={1}>
           <Grid item xs={2}>
             <Link href="/live/[id]" as="/live/523453">
-              <a>
-                <LiveCard />
-              </a>
+              <a>live-stream</a>
             </Link>
           </Grid>
           <Grid item xs={2}>
-            <LiveCard />
+            <Link href="/live/streamer" as="/live/streamer">
+              <a>live-streamer</a>
+            </Link>
           </Grid>
           <Grid item xs={2}>
-            <LiveCard />
+            <Link href="/chat/[id]" as="/chat/523453">
+              <a>chat</a>
+            </Link>
           </Grid>
+
           <Grid item xs={2}>
             <LiveCard />
           </Grid>

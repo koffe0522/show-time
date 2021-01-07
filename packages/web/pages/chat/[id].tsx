@@ -1,6 +1,6 @@
 import { Theme, createStyles, makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
-import AgoraRTC, { IAgoraRTCClient } from 'agora-rtc-sdk-ng';
+import AgoraRTC, { IAgoraRTCClient, ILocalTrack } from 'agora-rtc-sdk-ng';
 import { useEffect } from 'react';
 
 const RESOLUTION_ARR = {
@@ -24,16 +24,20 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
-export default function LiveRoom(): JSX.Element {
+export default function ChatRoom(): JSX.Element {
+  const options = {
+    appId: process.env.NEXT_PUBLIC_APP_ID,
+    channel: process.env.NEXT_PUBLIC_CHANNEL_NAME,
+    token: process.env.NEXT_PUBLIC_TEMP_TOKEN, // generated on server
+  };
   const classes = useStyles();
 
   /**
    * @returns {IAgoraRTCClient} client agora client instance
    */
   const createClient = (): IAgoraRTCClient => {
-    const client = AgoraRTC.createClient({ mode: 'live', codec: 'h264', role: 'audience' });
-    client.setClientRole('audience');
-    return client;
+    // return AgoraRTC.createClient({ mode: "live", codec: "h264", role: "audience" })
+    return AgoraRTC.createClient({ mode: 'rtc', codec: 'h264' });
   };
 
   /**
@@ -46,10 +50,10 @@ export default function LiveRoom(): JSX.Element {
     try {
       const uid = await client
         .join(
-          process.env.NEXT_PUBLIC_APP_ID,
-          process.env.NEXT_PUBLIC_CHANNEL_NAME,
-          process.env.NEXT_PUBLIC_TEMP_TOKEN,
-          null,
+          options.appId ?? '', // APP_ID
+          options.channel ?? '', // CHANNEL
+          options.token ?? null, // TOKEN
+          null, // uid: The user ID, which should be unique in a channel. If you set uid as null, Agora automatically assigns a user ID and returns it in the result of join.
         )
         .catch((e) => console.error(e));
 
@@ -64,6 +68,24 @@ export default function LiveRoom(): JSX.Element {
     } catch (error) {
       console.error(error);
       return;
+    }
+  };
+
+  /**
+   * @description Initializes the local track
+   * @param {IAgoraRTCClient} client agora client instance
+   * @returns {Promise<ILocalTrack[]>} local video tracks
+   */
+  const localTrackInit = async (): Promise<ILocalTrack[]> => {
+    try {
+      const localAudioTrack = await AgoraRTC.createMicrophoneAudioTrack();
+      const localVideoTrack = await AgoraRTC.createCameraVideoTrack();
+      // quality setting the video track
+      localVideoTrack.setEncoderConfiguration('120p_4');
+      return [localAudioTrack, localVideoTrack];
+    } catch (err) {
+      console.error(`Failed to publish, ${err}`);
+      return [];
     }
   };
 
@@ -117,6 +139,28 @@ export default function LiveRoom(): JSX.Element {
       playerContainer.remove();
     });
   };
+  /**
+   * @description show local track
+   * @param {IAgoraRTCClient} client agora client instance
+   */
+  const showLocalTrack = (client: IAgoraRTCClient) => {
+    client.localTracks.forEach((localTrack) => {
+      if (localTrack.trackMediaType === 'video') {
+        const playerContainer = document.createElement('div');
+        playerContainer.id = client.uid?.toString() ?? '1234';
+        playerContainer.style.width = '100%';
+        playerContainer.style.height = '100%';
+
+        document.querySelector('#me')?.append(playerContainer);
+        localTrack.play(playerContainer);
+      }
+
+      if (localTrack.trackMediaType === 'audio') {
+        // Play the audio track. No need to pass any DOM element.
+        localTrack.play();
+      }
+    });
+  };
 
   useEffect(() => {
     // NOTE: disble SDK Log
@@ -124,8 +168,11 @@ export default function LiveRoom(): JSX.Element {
     // video transmission and reception processiong
     (async () => {
       const client = createClient();
+      const localTracks = await localTrackInit();
       await prepareJoin(client);
       await subscribe(client);
+      await client.publish(localTracks);
+      showLocalTrack(client);
     })();
 
     // clean up
@@ -136,6 +183,8 @@ export default function LiveRoom(): JSX.Element {
 
   return (
     <div className={classes.root}>
+      <Paper elevation={0} />
+      <Paper id="me" />
       <Paper elevation={3} id="remote-container" />
     </div>
   );
