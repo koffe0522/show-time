@@ -24,7 +24,7 @@
     "web": "yarn workspace web",
     "backend": "yarn workspace backend",
     "lint": "yarn web:lint && yarn backend:lint",
-    "web:lint": "eslint --fix --ext .jsx,.js,.tsx,.ts ./packages/web",
+    "web:lint": "eslint --fix --ext ./packages/web/**/*.{ts,tsx}",
     "backend:lint": "eslint --fix --ext .jsx,.js,.tsx,.ts ./packages/backend"
   },
   "devDependencies": {

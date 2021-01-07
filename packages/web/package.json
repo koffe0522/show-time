@@ -11,6 +11,7 @@
   "dependencies": {
     "@types/node": "^14.14.19",
     "@types/react": "^17.0.0",
+    "agora-rtc-sdk-ng": "^4.2.1",
     "next": "10.0.4",
     "react": "17.0.1",
     "react-dom": "17.0.1",

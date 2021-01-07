@@ -1,7 +1,7 @@
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 
-import Header from '@/components/organisms/Header'
+import Header from '@/components/organisms/Header';
 import Footer from '@/components/organisms/Footer';
 
 type Layout = {
@@ -10,7 +10,7 @@ type Layout = {
 
 const useStyles = makeStyles({
   root: {
-    marginTop: 64
+    marginTop: 64,
   },
 });
 

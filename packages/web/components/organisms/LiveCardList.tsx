@@ -1,6 +1,5 @@
 import React from 'react';
-import Link from 'next/link'
-import { useRouter } from "next/router";
+import Link from 'next/link';
 import { Theme, createStyles, makeStyles } from '@material-ui/core/styles';
 
 import Typography from '@material-ui/core/Typography';
@@ -12,7 +11,7 @@ import LiveCard from '@/components/molecules/LiveCard';
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     container: {
-      width: '100%'
+      width: '100%',
     },
     root: {
       marginTop: theme.spacing(4),
@@ -25,9 +24,9 @@ const useStyles = makeStyles((theme: Theme) =>
       transform: 'translateZ(0)',
     },
     gridItem: {
-      display: "flex",
-      justifyContent: "center",
-      alignItems: 'center'
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
     },
     title: {
       color: theme.palette.primary.light,
@@ -39,19 +38,22 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
-
 export default function LiveCardList(): JSX.Element {
   const classes = useStyles();
 
   return (
     <div className={classes.container}>
-      <Typography variant="h3" component="h3">#オンライブ</Typography>
+      <Typography variant="h3" component="h3">
+        #オンライブ
+      </Typography>
       <TabNav />
       <div className={classes.root}>
         <Grid container spacing={1}>
           <Grid item xs={2}>
-            <Link href="live/523453">
-              <LiveCard />
+            <Link href="/live/[id]" as="/live/523453">
+              <a>
+                <LiveCard />
+              </a>
             </Link>
           </Grid>
           <Grid item xs={2}>
@@ -75,5 +77,5 @@ export default function LiveCardList(): JSX.Element {
         </Grid>
       </div>
     </div>
-  )
+  );
 }
