@@ -10,6 +10,8 @@
     "shell": "npm run build && firebase functions:shell",
     "start": "npm run shell",
     "deploy": "firebase deploy --only functions",
+    "set:config": "firebase functions:config:set env=\"$(cat config/env.local.json)\"",
+    "get:config": "firebase functions:config:get > config/.runtimeconfig.json",
     "logs": "firebase functions:log"
   },
   "engines": {
