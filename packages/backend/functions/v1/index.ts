@@ -1,2 +1,2 @@
-import * as Request from './request';
-export const request = { ...Request };
+import * as Request from '@/v1/request';
+export const https = { ...Request };

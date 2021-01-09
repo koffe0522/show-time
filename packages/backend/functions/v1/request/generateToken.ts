@@ -26,4 +26,5 @@ export const generateToken = functions.https.onRequest(async (req, res) => {
     privilegeExpiredTs,
   );
   console.log('Token With Integer Number Uid: ' + tokenA);
+  res.status(200).send(tokenA);
 });

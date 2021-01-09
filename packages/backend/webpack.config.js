@@ -14,7 +14,7 @@ module.exports = {
   resolve: {
     extensions: ['.ts', '.js', '.json', '.test.ts'],
     alias: {
-      '@': path.resolve(__dirname, './'),
+      '@': path.resolve(__dirname, './functions'),
     },
   },
   module: {

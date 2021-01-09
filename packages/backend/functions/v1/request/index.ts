@@ -1,3 +1,3 @@
-import * as GenerateToken from './generateToken';
+import * as GenerateToken from '@/v1/request/generateToken';
 
-export const request = { ...GenerateToken };
+export const token = { ...GenerateToken };
