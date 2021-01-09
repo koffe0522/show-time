@@ -17,10 +17,13 @@
   },
   "main": "index.js",
   "dependencies": {
+    "crc-32": "^1.2.0",
+    "cuint": "^0.2.2",
     "firebase-admin": "^9.4.2",
     "firebase-functions": "^3.13.0"
   },
   "devDependencies": {
+    "@types/cuint": "^0.2.1",
     "firebase-functions-test": "^0.2.3",
     "ts-loader": "^8.0.13",
     "typescript": "^4.1.3",

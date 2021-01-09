@@ -5,7 +5,7 @@ const webpack = require('webpack');
 module.exports = {
   target: 'node',
   mode: 'production',
-  entry: './functions/src/index.ts',
+  entry: './functions/index.ts',
   output: {
     filename: 'index.js',
     path: `${__dirname}`,
