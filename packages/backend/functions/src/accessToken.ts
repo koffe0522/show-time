@@ -1,4 +1,4 @@
-import ByteBuf from './byteBuf';
+import ByteBuf from '@/src/byteBuf';
 import crypto = require('crypto');
 import crc32 = require('crc-32');
 import cuint = require('cuint');
@@ -22,13 +22,17 @@ const priviledges = {
 
 const version = '006';
 
+type Messages = {
+  [key: number]: number;
+};
+
 class AccessToken {
   private appId: string;
   private appCertificate: string;
   private channelName: string;
   private uid: string;
   private timestamp: number;
-  private messages = {};
+  private messages: Messages = {};
   private randomInt = Math.floor(Math.random() * 0xffffffff);
 
   constructor(appID: string, appCertificate: string, channelName: string, uid: number) {
@@ -54,7 +58,7 @@ class AccessToken {
     const m = new Message({
       salt: this.randomInt,
       ts: this.timestamp,
-      messages: this.messages as any,
+      messages: this.messages,
     }).pack();
 
     const toSign = Buffer.concat([
@@ -84,9 +88,7 @@ class AccessToken {
 type MessageOptions = {
   salt: number;
   ts: number;
-  messages: {
-    [key: number]: number;
-  };
+  messages: Messages;
 };
 
 class Message {

@@ -1,4 +1,4 @@
-import AccessToken, { priviledges } from './accessToken';
+import AccessToken, { priviledges } from '@/src/accessToken';
 
 const Role = {
   // RECOMMENDED. Use this role for a voice/video call or a live broadcast, if your scenario does not require authentication for [Hosting-in](https://docs.agora.io/en/Agora%20Platform/terms?platform=All%20Platforms#hosting-in).

@@ -1,5 +1,5 @@
 import * as functions from 'firebase-functions';
-import { RtcTokenBuilder, Role } from '../../src/rtcTokenBuilder';
+import { RtcTokenBuilder, Role } from '@/src/rtcTokenBuilder';
 
 export const generateToken = functions.https.onRequest(async (req, res) => {
   if (req.method !== 'GET') {

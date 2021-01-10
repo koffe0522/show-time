@@ -17,6 +17,7 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
+import Link from 'next/link';
 
 const drawerWidth = 240;
 
@@ -143,12 +144,17 @@ export default function Header(): JSX.Element {
         </div>
         <Divider />
         <List>
-          {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-            <ListItem button key={text}>
-              <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItem>
-          ))}
+          <Link href="/channel/create" as="/channel/create">
+            <a>
+              <ListItem button>
+                <ListItemIcon>
+                  {' '}
+                  <InboxIcon />
+                </ListItemIcon>
+                <ListItemText primary="create" />
+              </ListItem>
+            </a>
+          </Link>
         </List>
         <Divider />
         <List>
@@ -161,5 +167,5 @@ export default function Header(): JSX.Element {
         </List>
       </Drawer>
     </div>
-  )
+  );
 }
