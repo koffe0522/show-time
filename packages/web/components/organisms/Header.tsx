@@ -144,6 +144,17 @@ export default function Header(): JSX.Element {
         </div>
         <Divider />
         <List>
+          <Link href="/" as="/">
+            <a>
+              <ListItem button>
+                <ListItemIcon>
+                  {' '}
+                  <InboxIcon />
+                </ListItemIcon>
+                <ListItemText primary="top" />
+              </ListItem>
+            </a>
+          </Link>
           <Link href="/channel/create" as="/channel/create">
             <a>
               <ListItem button>
@@ -157,14 +168,6 @@ export default function Header(): JSX.Element {
           </Link>
         </List>
         <Divider />
-        <List>
-          {['All mail', 'Trash', 'Spam'].map((text, index) => (
-            <ListItem button key={text}>
-              <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItem>
-          ))}
-        </List>
       </Drawer>
     </div>
   );

@@ -4,6 +4,7 @@ import React, { Fragment, useEffect } from 'react';
 import { ThemeProvider } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import theme from '@/src/theme.ts';
+import firebase from 'firebase/app';
 
 function MyApp({ Component, pageProps }: AppProps) {
   useEffect(() => {
@@ -12,7 +13,7 @@ function MyApp({ Component, pageProps }: AppProps) {
     if (jssStyles) {
       jssStyles.parentElement.removeChild(jssStyles);
     }
-  });
+  }, []);
 
   return (
     <Fragment>

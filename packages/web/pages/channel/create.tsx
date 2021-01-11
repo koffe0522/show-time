@@ -5,7 +5,6 @@ import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormControl from '@material-ui/core/FormControl';
 import FormHelperText from '@material-ui/core/FormHelperText';
-import FormLabel from '@material-ui/core/FormLabel';
 import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
@@ -44,34 +43,22 @@ export default function ChannelCreate() {
 
   const handleRadioChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setValue((event.target as HTMLInputElement).value);
-    setHelperText(' ');
-    setError(false);
   };
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-
-    if (value === 'best') {
-      setHelperText('You got it!');
-      setError(false);
-    } else if (value === 'worst') {
-      setHelperText('Sorry, wrong answer!');
-      setError(true);
-    } else {
-      setHelperText('Please select an option.');
-      setError(true);
-    }
+    console.log('handleSubmit', value);
   };
 
   return (
     <Main>
-      <form className={classes.root} noValidate autoComplete="off">
+      <form className={classes.root} noValidate autoComplete="off" onSubmit={handleSubmit}>
         <Card className={classes.div}>
           <TextField required id="standard-required" label="channel name" />
           <FormControl component="fieldset" error={error} className={classes.formControl}>
-            <RadioGroup aria-label="quiz" name="quiz" value={value} onChange={handleRadioChange}>
-              <FormControlLabel value="best" control={<Radio />} label="Live" />
-              <FormControlLabel value="worst" control={<Radio />} label="group chat" />
+            <RadioGroup aria-label="type" name="type" value={value} onChange={handleRadioChange}>
+              <FormControlLabel value="live" control={<Radio />} label="Live" />
+              <FormControlLabel value="rtc" control={<Radio />} label="Group chat" />
             </RadioGroup>
             <FormHelperText>{helperText}</FormHelperText>
             <Button type="submit" variant="outlined" color="primary" className={classes.button}>
