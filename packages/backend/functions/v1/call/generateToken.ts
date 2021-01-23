@@ -1,35 +1,39 @@
 import * as functions from 'firebase-functions';
 import { RtcTokenBuilder, Role } from '@/src/rtcTokenBuilder';
 
-export const generateToken = functions.https.onRequest(async (req, res) => {
-  res.set('Access-Control-Allow-Origin', '*');
-  res.set('Access-Control-Allow-Methods', 'GET');
-  res.set('Access-Control-Allow-Headers', 'Content-Type, authorization');
-
-  if (req.method !== 'GET') {
-    res.status(400).send('error');
-    return;
+export const generateToken = functions.https.onCall(async (data, context) => {
+  if (!context.auth) {
+    return {
+      status: 403,
+      message: 'unauthentication',
+    };
   }
 
   const appID = functions.config()?.env?.appid;
   const appCertificate = functions.config()?.env?.certificate;
-  const channelName = req.query?.channelName;
-  const uid = req.query?.uid as string | undefined;
+  const channelName = data?.channelName as string | undefined;
+  const uid = data?.uid as string | undefined;
 
   if (!appID || !appCertificate) {
-    res.status(400).send('config not set');
-    return;
+    return {
+      status: 500,
+      message: 'config not set',
+    };
   }
 
   if (!channelName || !uid) {
-    res.status(400).send('Query parameters not set');
-    return;
+    return {
+      status: 500,
+      message: 'parameters not set',
+    };
   }
 
   const pattern = /^\d+$/;
   if (!pattern.test(uid)) {
-    res.status(400).send('uid is number only');
-    return;
+    return {
+      status: 500,
+      message: 'uid is number only',
+    };
   }
 
   try {
@@ -47,8 +51,16 @@ export const generateToken = functions.https.onRequest(async (req, res) => {
       privilegeExpiredTs,
     );
     console.log('Token With Integer Number Uid: ' + tokenA);
-    res.status(200).send({ token: tokenA });
+    return {
+      status: 201,
+      data: {
+        token: tokenA,
+      },
+    };
   } catch (error) {
-    res.status(500).send({ error });
+    return {
+      status: error.code,
+      message: error.message,
+    };
   }
 });
