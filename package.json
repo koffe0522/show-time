@@ -23,6 +23,7 @@
   "scripts": {
     "web": "yarn workspace web",
     "backend": "yarn workspace backend",
+    "web:run": "yarn web dev",
     "lint": "yarn web:lint && yarn backend:lint",
     "web:lint": "eslint --fix --ext ./packages/web/**/*.{ts,tsx}",
     "backend:lint": "eslint --fix --ext .tsx,.ts ./packages/backend"
