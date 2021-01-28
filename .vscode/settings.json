@@ -8,7 +8,12 @@
     "strings": true
   },
   "tailwindCSS.includeLanguages": {
-    "plaintext": "css"
+    "typescript": "javascript",
+    "typescriptreact": "javascript"
   },
-  "scss.validate": false
+  "recommendations": ["bradlc.vscode-tailwindcss"],
+  "scss.validate": false,
+  "tailwindCSS.experimental.classRegex": [],
+  "tailwindCSS.emmetCompletions": true,
+  "tailwindCSS.experimental.showPixelValues": true
 }
